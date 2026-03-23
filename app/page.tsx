@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { RecentSearchesList } from '@/components/RecentSearchesList';
+import { QuickSearchBar } from '@/components/QuickSearchBar';
 
 export default function DashboardPage() {
   return (
@@ -27,6 +28,8 @@ export default function DashboardPage() {
           fraktinformation via QR-kod, UIL-referens eller transportidentifierare.
         </p>
       </div>
+
+      <QuickSearchBar />
 
       {/* Quick actions */}
       <h2 className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: 'var(--muted)' }}>

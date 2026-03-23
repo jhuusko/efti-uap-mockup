@@ -17,7 +17,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "eFTI Portal – Behörig myndighet",
   description: "Elektronisk fraktinformation – sökportal för behöriga myndigheter",
-  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {

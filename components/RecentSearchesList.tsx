@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getRecentSearches } from '@/lib/mockApi';
+import { getRecentSearches, initializeMockSearchHistory } from '@/lib/mockApi';
 
 type RecentSearch = {
   requestId: string;
@@ -15,6 +15,7 @@ export function RecentSearchesList() {
   const [searches, setSearches] = useState<RecentSearch[]>([]);
 
   useEffect(() => {
+    initializeMockSearchHistory();
     setSearches(getRecentSearches());
   }, []);
 

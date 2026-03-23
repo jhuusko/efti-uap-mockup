@@ -1,4 +1,4 @@
-import { UILQuery, IdentifierQuery, RequestResult, RequestStatus } from './types';
+import { UILQuery, IdentifierQuery, RequestResult, RequestStatus, TransportMode } from './types';
 import { mockConsignments } from './mockData';
 
 const PENDING_DURATION_MS = 2500;
@@ -113,4 +113,71 @@ export function getRecentSearches() {
   } catch {
     return [];
   }
+}
+
+export function initializeMockSearchHistory() {
+  if (typeof window === 'undefined') return;
+  if (getRecentSearches().length > 0) return;
+
+  const now = Date.now();
+  const entries: Array<{
+    requestId: string;
+    queryType: 'uil' | 'identifiers';
+    query: UILQuery | IdentifierQuery;
+    msAgo: number;
+  }> = [
+    {
+      requestId: 'REQ-HIST-001',
+      queryType: 'identifiers',
+      query: { identifier: 'MSCU7654321', modeCode: TransportMode.SEA },
+      msAgo: 15 * 60 * 1000,
+    },
+    {
+      requestId: 'REQ-HIST-002',
+      queryType: 'uil',
+      query: { datasetId: 'DS-SE-2024-08821', gateId: 'SE-TULLV', platformId: 'PLT-SE-001' },
+      msAgo: 100 * 60 * 1000,
+    },
+    {
+      requestId: 'REQ-HIST-003',
+      queryType: 'identifiers',
+      query: { identifier: 'ABCU1234567', modeCode: TransportMode.ROAD },
+      msAgo: 5 * 60 * 60 * 1000,
+    },
+    {
+      requestId: 'REQ-HIST-004',
+      queryType: 'uil',
+      query: { datasetId: 'DS-FI-2024-04412', gateId: 'FI-TULLI', platformId: 'PLT-FI-002' },
+      msAgo: 22 * 60 * 60 * 1000,
+    },
+    {
+      requestId: 'REQ-HIST-005',
+      queryType: 'identifiers',
+      query: { identifier: 'TCKU3456789', modeCode: TransportMode.ROAD, registrationCountryCode: 'DE' },
+      msAgo: 46 * 60 * 60 * 1000,
+    },
+  ];
+
+  const recentList: { requestId: string; queryType: string; summary: string; submittedAt: string }[] = [];
+
+  for (const entry of entries) {
+    const submittedAt = new Date(now - entry.msAgo).toISOString();
+    const result: RequestResult = {
+      requestId: entry.requestId,
+      status: RequestStatus.COMPLETE,
+      queryType: entry.queryType,
+      query: entry.query,
+      submittedAt,
+      data: mockConsignments,
+    };
+    localStorage.setItem(`efti_request_${entry.requestId}`, JSON.stringify(result));
+    recentList.push({
+      requestId: entry.requestId,
+      queryType: entry.queryType,
+      summary: buildSummary(result),
+      submittedAt,
+    });
+  }
+
+  localStorage.setItem('efti_recent_searches', JSON.stringify(recentList));
 }
