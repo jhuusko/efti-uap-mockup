@@ -120,7 +120,7 @@ export function RequestView({ requestId }: Props) {
           ) : (
             <div className="space-y-3">
               {result.data.map((c, i) => (
-                <ConsignmentCard key={c.datasetId} consignment={c} index={i} />
+                <ConsignmentCard key={c.datasetId} consignment={c} index={i} requestId={requestId} />
               ))}
             </div>
           )}

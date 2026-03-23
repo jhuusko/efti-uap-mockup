@@ -298,3 +298,22 @@ body {
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
 }
+
+/* ── Print styles ── */
+@media print {
+  aside,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  .transport-doc {
+    border: 2px solid #333 !important;
+    box-shadow: none !important;
+  }
+}

@@ -1,8 +1,10 @@
+import Link from 'next/link';
 import { ConsignmentApiDto, TransportModeLabel, TransportMode } from '@/lib/types';
 
 interface Props {
   consignment: ConsignmentApiDto;
   index: number;
+  requestId: string;
 }
 
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
@@ -15,7 +17,7 @@ function InfoRow({ label, value }: { label: string; value?: string | null }) {
   );
 }
 
-export function ConsignmentCard({ consignment, index }: Props) {
+export function ConsignmentCard({ consignment, index, requestId }: Props) {
   const { platformId, datasetId, gateId, consignment: c } = consignment;
   const equipment = c.transportEquipment?.[0];
   const movement = c.transportMovements?.[0];
@@ -103,6 +105,23 @@ export function ConsignmentCard({ consignment, index }: Props) {
             value={new Date(c.carrierAcceptanceDateTime).toLocaleString('sv-SE', { dateStyle: 'short', timeStyle: 'short' })}
           />
         )}
+      </div>
+
+      {/* Document link */}
+      <div className="px-4 py-2 border-t" style={{ borderColor: 'var(--border)' }}>
+        <Link
+          href={`/requests/${requestId}/document/${index}`}
+          className="text-xs font-medium flex items-center gap-1.5"
+          style={{ color: 'var(--primary)', textDecoration: 'none' }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="9" y1="13" x2="15" y2="13"/>
+            <line x1="9" y1="17" x2="12" y2="17"/>
+          </svg>
+          Visa transportdokument
+        </Link>
       </div>
 
       {/* Footer */}
