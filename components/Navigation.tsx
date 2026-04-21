@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
+import { AuthoritySwitcher } from './AuthoritySwitcher';
 
 interface NavItem {
   href: string;
@@ -120,10 +121,7 @@ export function Navigation() {
             <span className="text-xs" style={{ color: 'var(--muted)' }}>Tema</span>
             <ThemeToggle />
           </div>
-          <div className="px-3 py-2 rounded-lg" style={{ background: 'var(--surface-elevated)' }}>
-            <div className="text-xs font-medium" style={{ color: 'var(--foreground)' }}>Tullverket</div>
-            <div className="text-xs" style={{ color: 'var(--muted)' }}>Kontrollant</div>
-          </div>
+          <AuthoritySwitcher />
         </div>
       </aside>
 

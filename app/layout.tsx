@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AuthorityProvider } from "@/components/AuthorityProvider";
 import { Navigation } from "@/components/Navigation";
 
 const geistSans = Geist({
@@ -41,13 +42,15 @@ export default function RootLayout({
     >
       <body className="h-full">
         <ThemeProvider>
-          <div className="flex h-full">
-            <Navigation />
-            {/* Main content — offset for desktop sidebar and mobile bottom nav */}
-            <main className="flex-1 md:ml-64 pb-16 md:pb-0 min-h-full">
-              {children}
-            </main>
-          </div>
+          <AuthorityProvider>
+            <div className="flex h-full">
+              <Navigation />
+              {/* Main content — offset for desktop sidebar and mobile bottom nav */}
+              <main className="flex-1 md:ml-64 pb-16 md:pb-0 min-h-full">
+                {children}
+              </main>
+            </div>
+          </AuthorityProvider>
         </ThemeProvider>
       </body>
     </html>
